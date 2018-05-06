@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link type="text/css" rel="stylesheet" href="./lib/themes/default.css">
+    <link type="text/css" rel="stylesheet" href="./lib/themes/default.date.css">
+</head>
+<style>
+
+    .container {
+        margin: 0 auto;
+    }
+
+    .wrap {
+        position: relative;
+        width:666px;
+        margin: auto;
+    }
+
+
+    .frame {
+        height: 50px;
+        line-height:50px;
+        overflow: hidden;
+    }
+
+    .frame ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        font-size: 14px;
+    }
+
+    .frame ul li {
+        float: left;
+        width: 150px;
+        height: 100%;
+        margin: 0 1px 0 0;
+        padding: 0;
+        color: #999;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .frame ul li.active {
+        color: blue;
+    }
+
+
+    .picker__header{
+        display: none;
+    }
+    .krisUI{
+        background: #fff;
+    }
+</style>
+<body>
+
+    <div class="wx--picker-box">
+        <div class="">
+
+
+        </div>
+        <div class="picker--from">
+
+        </div>
+        <div class="wrap">
+            <div class="frame" id="year">
+                <ul class="clearfix">
+
+                </ul>
+            </div>
+
+            <div class="frame" id="month">
+                <ul class="clearfix">
+                    <li>Jan</li>
+                    <li>Feb</li>
+                    <li>Mar</li>
+                    <li>Apr</li>
+                    <li>May</li>
+                    <li>Jun</li>
+                    <li>Jul</li>
+                    <li>Aug</li>
+                    <li>Sep</li>
+                    <li>Oct</li>
+                    <li>Nov</li>
+                    <li>Dec</li>
+                </ul>
+            </div>
+        </div>
+        <input class="datepicker" style="display: none">
+    </div>
+
+
+</body>
+<script src="./lib/jquery.2.0.0.js"></script>
+<script src="./lib/picker.js"></script>
+<script src="./lib/picker.date.js"></script>
+<script src="./lib/sly.min.js"></script>
+
+<script>
+//    (function () {
+        let $year= $('#year');
+        let $month = $('#month');
+        let $slidee = $year.children('ul').eq(0);
+        let slyYear = null;
+        let slyMonth = null;
+        let nowDate = new Date();
+        let dateObj = {
+            year: nowDate.getFullYear() - 1900,
+            month: nowDate.getMonth()
+        }
+
+        const OPTION = {
+            horizontal: 1,
+            itemNav: 'forceCentered',
+            activateMiddle: 0,
+            smart: 1,
+            activateOn: 'click',
+            mouseDragging: 1,
+            touchDragging: 1,
+            releaseSwing: 1,
+            startAt: 10,
+            scrollBy: 1,
+            activatePageOn: 'click',
+            speed: 200,
+            moveBy: 600,
+            elasticBounds: 1,
+            dragHandle: 1,
+            dynamicHandle: 1,
+            clickBar: 1,
+        }
+
+        for(let i = 1900; i < 2101; i++) {
+            $slidee.append(`<li>${i}</li>`);
+        }
+        let $input = $('.datepicker').pickadate({
+            selectYears: true,
+            selectMonths: true,
+            today: '',
+            clear: '',
+            close: '',
+            onRender: function() {
+                if (!window.firstLoad) {
+                    slyYear = new Sly($year, OPTION).init();
+                    slyMonth = new Sly($month, OPTION).init();
+                    slyYear.activate(dateObj.year);
+                    slyMonth.activate(dateObj.month);
+                    window.firstLoad = true;
+                } else {
+                    dateObj.month = $('.picker__select--month').val();
+                    dateObj.year = $('.picker__select--year').val();
+                    console.log(dateObj.year - 1900)
+                    slyYear.activate(dateObj.year - 1900);
+                    slyMonth.activate(dateObj.month);
+
+                }
+            }
+        })
+        let picker = $input.pickadate('picker')
+
+        slyYear.on('active', function (e, index) {
+
+            dateObj.year = index + 1900;
+            picker.set('select', new Date(dateObj.year, dateObj.month))
+        });
+
+        slyMonth.on('active', function (e, index) {
+
+            dateObj.month = index;
+
+            picker.set('select', new Date(dateObj.year, index))
+
+        });
+//    }($))
+
+
+
+
+</script>
+</html>
