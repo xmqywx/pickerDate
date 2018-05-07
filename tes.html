@@ -17,11 +17,9 @@
         width:666px;
         margin: auto;
     }
-
-
     .frame {
-        height: 50px;
-        line-height:50px;
+        height: 80px;
+        line-height:80px;
         overflow: hidden;
     }
 
@@ -35,46 +33,102 @@
 
     .frame ul li {
         float: left;
-        width: 150px;
+        width: 136px;
         height: 100%;
         margin: 0 1px 0 0;
         padding: 0;
-        color: #999;
         text-align: center;
         cursor: pointer;
     }
 
-    .frame ul li.active {
-        color: blue;
-    }
-
-
     .picker__header{
         display: none;
     }
-    .krisUI{
+    .wx--picker-box{
         background: #fff;
+    }
+    .wx-input-item{
+        width: 50%;
+        float: left;
+    }
+    .wx-date-inputs{
+        padding: 0 30px;
+    }
+    .wx-date-inputs:before{
+        height: 70px;
+        clear:both;
+        content: '';
+        position: relative;
+        display: inline-block;
+    }
+    .slidee--year {
+        background: #0089ec;
+    }
+    .slidee--year li{
+        background: #0089ec;
+        color: #ffffff;
+        font-weight: normal;
+    }
+    .slidee--year li.active {
+        font-size:20px;
+        font-weight: 700;
+    }
+    .slidee--month li{
+        color: #aaa;
+    }
+    .slidee--month li.active {
+        font-size:20px;
+        color: #0089ec;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+    #month{
+        border-bottom: 3px solid #0089ec;
+    }
+    .wx-input-item .input{
+        color: #0089ec;
+        font-size: 18px;
+        cursor: pointer;
+        padding-top: 7px;
+    }
+    .wx-input-item .input.active{
+        font-weight: 700;
+    }
+    .wx-input-item .header{
+        color: #aaa;
+        font-size: 16px;
     }
 </style>
 <body>
 
     <div class="wx--picker-box">
-        <div class="">
-
-
-        </div>
-        <div class="picker--from">
-
-        </div>
         <div class="wrap">
+            <div class="wx-date-inputs">
+                <div class="wx-input-item ">
+                    <div class="header">
+                        From
+                    </div>
+                    <div class="input active" data-val="2018-5-6">
+                        06 May 2018
+                    </div>
+                </div>
+                <div class="wx-input-item">
+                    <div class="header">
+                        To
+                    </div>
+                    <div class="input" data-val="2018-5-6">
+                        30 June 2018
+                    </div>
+                </div>
+            </div>
             <div class="frame" id="year">
-                <ul class="clearfix">
+                <ul class="clearfix slidee--year">
 
                 </ul>
             </div>
 
             <div class="frame" id="month">
-                <ul class="clearfix">
+                <ul class="clearfix slidee--month">
                     <li>Jan</li>
                     <li>Feb</li>
                     <li>Mar</li>
@@ -136,6 +190,20 @@
         for(let i = 1900; i < 2101; i++) {
             $slidee.append(`<li>${i}</li>`);
         }
+
+        function init() {
+            let date  = $('.wx-input-item.active').attr('data-val');
+            nowDate = new Date(date);
+            let dateObj = {
+                year: nowDate.getFullYear() - 1900,
+                month: nowDate.getMonth()
+            }
+        }
+
+        function activeInput() {
+
+        }
+
         let $input = $('.datepicker').pickadate({
             selectYears: true,
             selectMonths: true,

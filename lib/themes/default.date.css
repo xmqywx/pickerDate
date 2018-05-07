@@ -191,12 +191,7 @@
   border-radius: 1000px;
 
 }
-.picker__day--highlighted:hover,
-.picker--focused .picker__day--highlighted {
-  cursor: pointer;
-  color: #000000;
-  background: #b1dcfb;
-}
+
 .picker__day--selected,
 .picker__day--selected:hover,
 .picker--focused .picker__day--selected {
